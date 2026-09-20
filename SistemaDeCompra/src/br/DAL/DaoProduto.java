@@ -3,12 +3,20 @@ package br.DAL;
 	import java.util.ArrayList;
 	import java.util.List;
 
-	import br.Model.Produto;
+import br.Model.Cliente;
+import br.Model.Produto;
 
 public class DaoProduto {
+	public int proxIdProduto;
 	List<Produto> tabelaProduto=new ArrayList();
 	
+	public DaoProduto(){
+		proxIdProduto = 0;
+	}
+	
 	public void Create(Produto produto) {
+		produto.setId(proxIdProduto);
+		proxIdProduto ++;
 		tabelaProduto.add(produto);
 	}
 	
@@ -30,4 +38,7 @@ public class DaoProduto {
 		return null;
 	}
 	
+	public List<Produto> listar(){
+		return tabelaProduto;
+	}
 }

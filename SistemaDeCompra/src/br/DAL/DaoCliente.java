@@ -6,10 +6,16 @@ import java.util.List;
 import br.Model.Cliente;
 
 public class DaoCliente {
+	public int proxCLiente;
 	List<Cliente> tabelaCliente=new ArrayList();
 	
+	public DaoCliente() {
+		proxCLiente = 1;
+	}
 	//CRUD
 	public void Create(Cliente cliente) {
+		cliente.setId(proxCLiente);
+		proxCLiente++;
 		tabelaCliente.add(cliente);
 	}
 	

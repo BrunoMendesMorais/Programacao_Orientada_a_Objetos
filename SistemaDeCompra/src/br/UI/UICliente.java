@@ -3,32 +3,58 @@ package br.UI;
 import java.util.List;
 import java.util.Scanner;
 
+import br.BLL.CadCliente;
 import br.Model.Cliente;
 
 public class UICliente {
 	Scanner leitor=new Scanner(System.in);
 	
-	public Cliente cadastrarCliente() {
+	public void cadastrarCliente(CadCliente cadCliente) {
 		System.out.println("====CADASTRO DE CLIENTE====");
 		System.out.println("Digite os dados do cliente:");
 		
-		System.out.print("\n id:"); 
-		int id=leitor.nextInt();
 		System.out.print("\n Nome:"); 
 		String nome=leitor.next();
 		
-		Cliente cliente= new Cliente(id,nome);
+		Cliente cliente= new Cliente(0,nome);
 		
-		return cliente;
+		cadCliente.CadastrarCliente(cliente);
 	}
 	
-	public void menuCliente() {
-		System.out.println("=====GESTÃO DE CLIENTES======");
-		System.out.println("[1] - CADASTRAR");
-		System.out.println("[2] - EDITAR");
-		System.out.println("[3] - BUSCAR");
-		System.out.println("[4] - LISTAR");
-		System.out.println("--------------------------");
+	public void menuCliente(CadCliente cadCliente) {
+		int resposta;
+		do {
+			System.out.println("=====GESTÃO DE CLIENTES======");
+			System.out.println("[1] - CADASTRAR");
+			System.out.println("[2] - EDITAR");
+			System.out.println("[3] - LISTAR");
+			System.out.println("[0] - SAIR");
+			System.out.println("--------------------------");
+			resposta = leitor.nextInt();
+			
+			switch(resposta){
+			case 1:
+				cadastrarCliente(cadCliente);
+				break;
+			case 2:
+				listarCliente(cadCliente.ListarClientes());
+				System.out.println("Digite o id do cliente:");
+				System.out.print("\n id:"); 
+				int id=leitor.nextInt();
+				Cliente cliente = cadCliente.BuscarCliente(id);
+				if(cliente == null) {
+					System.out.println("--------------------------");
+					System.out.println("=====CLIENTE NÃO EXISTE======");
+					System.out.println("--------------------------");
+				}
+				else {
+					this.atualizarCliente(cliente);
+					break;
+				}
+			case 3:
+				listarCliente(cadCliente.ListarClientes());
+			}
+		}while(resposta != 0);
 	}
 	
 	public void mostrarCliente(Cliente cliente) {
@@ -44,13 +70,14 @@ public class UICliente {
 		
 		mostrarCliente(cliente);
 		
-		System.out.print("\n id:"); 
-		int id=leitor.nextInt();
 		System.out.print("\n Nome:"); 
 		String nome=leitor.next();
 		
-		cliente.setId(id);
 		cliente.setNome(nome);
+		
+		System.out.println("--------------------------");
+		System.out.println("=====CLIENTE ATUALIZADO COM SUCESSO======");
+		System.out.println("--------------------------");
 		
 		return cliente;
 	}
@@ -61,17 +88,19 @@ public class UICliente {
 		System.out.println("Deseja excluir o cliente?(S)im - (N)ão");
 		String resposta=leitor.next();
 		
-		if(resposta.equals("S")) return true;
+		if(resposta.equals("S")) {
+			
+		}
 		return false;
 	}
 	
 	public void listarCliente(List<Cliente> lista) {
-		System.out.println("===LISTA CLIENTES====");
+		System.out.println("===LISTA CLIENTES==== \n");
 		for(Cliente c:lista) {
-			System.out.println("id:"+c.getId()+
-					           " nome:"+c.getNome());
+			System.out.println("id:"+c.getId()+" nome:"+c.getNome());
 			
 		}
+		System.out.println("-------------------------- \n");
 	}
 
 }

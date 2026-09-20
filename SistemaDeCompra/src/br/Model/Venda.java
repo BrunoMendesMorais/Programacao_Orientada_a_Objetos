@@ -1,15 +1,19 @@
 package br.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Venda {
 	
 	private int id;
 	private Cliente cliente;
 	private String data;
+	public int idProxProd;
+	private List<ProdutoVenda> produtoVenda =new ArrayList();  	
 	
-	public Venda(int id, String data, Cliente cliente) {
+	public Venda(int id) {
+		idProxProd = 1;
 		this.id = id;
-		this.cliente = cliente;
-		this.data = data;
 	}
 	
 	public int getId() {
@@ -21,6 +25,7 @@ public class Venda {
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -29,6 +34,18 @@ public class Venda {
 	}
 	public void setData(String data) {
 		this.data = data;
+	}
+	
+	public void setProdutoVenda(ProdutoVenda produtoVenda) {
+		this.produtoVenda.add(produtoVenda);
+	}
+	
+	public void revomerProdutoVenda(int idProduto) {
+		this.produtoVenda.remove(idProduto);
+	}
+	
+	public List<ProdutoVenda> getListaProduto() {
+		return produtoVenda;
 	}
 	
 }
